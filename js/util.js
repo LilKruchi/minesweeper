@@ -11,17 +11,13 @@ function renderBoard(mat, selector) {
 			const currCell = mat[i][j];
 
 			var cellClass = getClassName({ i: i, j: j });
-			// console.log('cellClass:', cellClass)
 
-			// if (currCell.type === FLOOR) cellClass += ' floor';
-			// else if (currCell.type === WALL) cellClass += ' wall';
 
 			strHTML += `\t<td class="hover hidden cell ${cellClass}" onmousedown="cellClicked(event,${i},${j})" >\n`;
 
 			if (currCell.isMine && currCell.isShown) {
 				strHTML += MINE;
 			}
-            // console.log(currCell);
 
 			strHTML += '\t</td>\n';
 		}
@@ -35,7 +31,6 @@ function renderBoard(mat, selector) {
 
 
 function setMinesNegsCount(cellI, cellJ, mat) {
-    // console.log(cellI, cellJ);
     var neighborsCount = 0
 
     for (var i = cellI - 1; i <= cellI + 1; i++) {
@@ -43,27 +38,76 @@ function setMinesNegsCount(cellI, cellJ, mat) {
 
         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
             
-        if (i === cellI && j === cellJ) continue
-        if (j < 0 || j >= mat[i].length) continue
-
-        if (mat[i][j].isMine) neighborsCount++
+            if (i === cellI && j === cellJ) continue
+            if (j < 0 || j >= mat[i].length) continue
+            console.log(mat[i][j].isMine);
+            if (mat[i][j].isMine) {
+                mat[cellI][cellJ].minesAroundCount++;
+                neighborsCount++
+            }
         }
     }
 
-    console.log(`number of mines: ${neighborsCount}`);
+    // console.log(`number of mines: ${neighborsCount}`);
+    // if (neighborsCount === 0) return null
     return neighborsCount
 }
+
+
+// function setMinesNegsCount(cellI, cellJ, mat) {
+//     //
+//     for (var i = cellI - 1; i <= cellI + 1; i++) {
+//       if (i < 0 || i >= mat.length) continue;
+  
+//       for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+//         if (i === cellI && j === cellJ) continue;
+//         if (j < 0 || j >= mat[i].length) continue;
+  
+//         if (mat[i][j].isMine) mat[cellI][cellJ].minesAroundCount++;
+//       }
+//     }
+//     return mat[cellI][cellJ].minesAroundCount;
+//   }
+
+
+// function setMinesNegsCount(cellI, cellJ, mat) {
+//     var neighborsCount = 0
+//     console.log(mat);
+
+//     for (var i = 0 - 1; i <= i + 1; i++) {
+//         console.log(i);
+//         if (i < 0 || i >= mat.length) continue
+//         for (var j = 0 - 1; j <= j + 1; j++) {
+//             if (i === i && j === j) continue
+//             if (j < 0 || j >= mat[i].length) continue
+//         }
+        
+//     }
+
+//     for (var i = cellI - 1; i <= cellI + 1; i++) {
+//         if (i < 0 || i >= mat.length) continue
+
+//         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+//             console.log(i, j);
+//             if (i === cellI && j === cellJ) continue
+//             if (j < 0 || j >= mat[i].length) continue
+
+//         }
+//     }
+
+//     // console.log(`number of mines: ${neighborsCount}`);
+//     if (neighborsCount === 0) return null
+//     return neighborsCount
+// }
 
 
 function getEmptyPositions(board) {
     const coords = []
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
-            // console.log(board[i][0]);
             if (!board[i][j].isMine) coords.push({i,j})
         }
     }
-    // console.log(coords);
     return coords
 }
 

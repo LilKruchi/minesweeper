@@ -1,13 +1,14 @@
 'use strict'
 // Global variables go here
 
-var gLevel = { size: 4, mines: 2}
-var gBoard
-var gGame
-var gGameTimer
+var gLevel = {size: 4, mines: 2}
+var gSeconds = 0
 var gHealth = 1
 var gCountFlags = gLevel.mines - 1
 var gIsFlagged = false
+var gBoard
+var gGame
+var gGameTimer
 var gBombCoords
 
 const MINE = '<img src="img/mine.png">'
@@ -27,6 +28,10 @@ function initGame() {
     
 
 	renderBoard(gBoard, '.minesweeper-container')
+
+    gHealth = -1
+    
+
 	
 }
 
@@ -36,17 +41,28 @@ function startGame() {
     
     var elBtn = document.querySelector('.startGame')
 	elBtn.src = 'img/alive.png'
-    
+    clearInterval(gGameTimer)
 	initGame()
-    
+    startTimer()
 	gGame.isOn = true
     
 	gBoard = buildBoard(gLevel.size)
 	gBombCoords = randomMineLocation(gBoard)
     loopBoard(gBoard)
+
+
     // console.log(gBoard);
 }
 
+function startTimer() {
+    gGameTimer = setInterval(function() {
+    var elSeconds = document.querySelector('.timer')
+    gSeconds ++
+    elSeconds.innerText ='0' + '0' + gSeconds 
+    if (gSeconds > 9) elSeconds.innerText ='0' + gSeconds
+    if (gSeconds > 99) elSeconds.innerText = gSeconds 
+    }, 1000)
+}
 
 function loopBoard(board) {
     console.log(board.length);
@@ -121,7 +137,7 @@ function cellClicked(elCell, i, j) {
 		var className = getClassName(cellCoord)
 		var elCell = document.querySelector('.' + className)
 		elCell.classList.remove('hidden')
-        // expandShown(gBoard, elCell, i, j)
+        expandShown(gBoard, elCell, i, j)
 		renderCell(cellCoord, countBombs)
 
 		if (gBoard[i][j].isMine) {
@@ -138,26 +154,30 @@ function cellClicked(elCell, i, j) {
 }
 
 
-// function expandShown(mat, elCell, cellI, cellJ) {
-//     for (var i = cellI - 1; i <= cellI + 1; i++) {
-//         if (i < 0 || i >= mat.length) continue
+function expandShown(mat, elCell, cellI, cellJ) {
+    for (var i = cellI - 1; i <= cellI + 1; i++) {
+        if (i < 0 || i >= mat.length) continue
 
-//         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
-// 	        var cellCoord = { i, j }
+        for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+	        var cellCoord = { i, j }
 
-//             var className = getClassName(cellCoord)
-//             var elCell = document.querySelector('.' + className)
-//             var currCell = mat[i][j]
-//             if (i === cellI && j === cellJ) continue
-//             if (j < 0 || j >= mat[i].length) continue
+            var className = getClassName(cellCoord)
+            var elCell = document.querySelector('.' + className)
+            var currCell = mat[i][j]
+            if (i === cellI && j === cellJ) continue
+            if (j < 0 || j >= mat[i].length) continue
 
             
-//             if(!currCell.minesAroundCount) {
-//                 elCell.classList.remove('hidden')
-//             }
-//         }
-//     }
-// }
+            if(currCell.minesAroundCount === 0 || currCell.minesAroundCount === null) {
+                if (!currCell.isMine) {
+                    elCell.classList.remove('hidden')
+                    renderCell({i:cellI, j:cellJ}, elCell.innerText)
+
+                }
+            }
+        }
+    }
+}
 
 
 

@@ -49,7 +49,7 @@ function setMinesNegsCount(cellI, cellJ, mat) {
     }
 
     // console.log(`number of mines: ${neighborsCount}`);
-    // if (neighborsCount === 0) return null
+    if (neighborsCount === 0) return null
     return neighborsCount
 }
 

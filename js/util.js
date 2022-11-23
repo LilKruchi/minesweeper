@@ -16,7 +16,7 @@ function renderBoard(mat, selector) {
 			// if (currCell.type === FLOOR) cellClass += ' floor';
 			// else if (currCell.type === WALL) cellClass += ' wall';
 
-			strHTML += `\t<td class="cell ${cellClass} "  onmousedown="cellClicked(event,${i},${j})" >\n`;
+			strHTML += `\t<td class="hover hidden cell ${cellClass}" onmousedown="cellClicked(event,${i},${j})" >\n`;
 
 			if (currCell.isMine && currCell.isShown) {
 				strHTML += MINE;
@@ -55,6 +55,19 @@ function setMinesNegsCount(cellI, cellJ, mat) {
 }
 
 
+function getEmptyPositions(board) {
+    const coords = []
+    for (var i = 0; i < board.length; i++) {
+        for (var j = 0; j < board[i].length; j++) {
+            // console.log(board[i][0]);
+            if (!board[i][j].isMine) coords.push({i,j})
+        }
+    }
+    // console.log(coords);
+    return coords
+}
+
+
 
 function getClassName(location) {
 	const cellClass = 'cell-' + location.i + '-' + location.j;
@@ -67,4 +80,16 @@ function renderCell(location, value) {
 	const cellSelector = '.' + getClassName(location); // cell-i-j
 	const elCell = document.querySelector(cellSelector);
 	elCell.innerHTML = value;
+}
+
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); 
+}
+
+function getClassName(location) {
+    const cellClass = 'cell-' + location.i + '-' + location.j
+    return cellClass
 }

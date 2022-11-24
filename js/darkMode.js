@@ -13,6 +13,7 @@ function toggleDarkMode(elBtn) {
     } else {
         elTheme.setAttribute('href', './css/light.css')
         elBtn.src = 'img/moon.png'
+        console.log();
     }
 }
 

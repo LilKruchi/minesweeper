@@ -34,7 +34,7 @@ function createHearts() {
     var strHTML = ''
 
     for (var i = 0 ; i < gHealth; i++) {
-        strHTML += '<img src="./img/hp.png">'
+        strHTML += `<img class="${i} hearts" src="./img/hp.png">`
     }
 
     const elDiv = document.querySelector('.hearts')

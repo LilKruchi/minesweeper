@@ -57,7 +57,6 @@ function startGame() {
 
 
 function difficultyLevel(size) { 
-    console.log(size);
     gLevel.size = size
     gLevel.mines  = 2
 
@@ -161,7 +160,6 @@ function revealBombsOnLose(bombCoords) {
 
 function cellClicked(elCell, i, j) {
     var elBombs = document.querySelector('.bomb-count')
-    console.log(elBombs.innerText);
 
 	if (!gGame.isOn) return
 	var cellCoord = { i, j }
@@ -219,15 +217,20 @@ function expandShown(mat, elCell, cellI, cellJ) {
 }
 
 
+function updateHearts() {
+    var elHearts = document.querySelectorAll('.hearts')
+    elHearts[1].remove()
+}
+
 
 function clickOnBomb(coords, elCell) {
 
     elCell.classList.add('bomb')
     gHealth -= 1
     gScore -= 1
+    updateHearts()
     updateBombCount()
 
-    console.log('hearts left:',gHealth)
 
     var elBtn = document.querySelector('.startGame')
 	elBtn.src = 'img/startGame.png'

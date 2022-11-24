@@ -54,6 +54,8 @@ function startGame() {
 }
 
 
+
+
 function difficultyLevel(size) { 
     console.log(size);
     gLevel.size = size

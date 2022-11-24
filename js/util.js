@@ -43,6 +43,19 @@ function createHearts() {
 }
 
 
+function createHints() {
+    var strHTML = ''
+
+    for (var i = 0 ; i < gHints; i++) {
+        strHTML += `<img class="${i} hints" onclick="hints()" src="./img/hint.png">`
+    }
+
+    const elDiv = document.querySelector('.hints')
+    elDiv.innerHTML = strHTML
+    
+}
+
+
 function setMinesNegsCount(cellI, cellJ, mat) {
     var neighborsCount = 0
 
@@ -103,4 +116,14 @@ function getRandomInt(min, max) {
 function getClassName(location) {
     const cellClass = 'cell-' + location.i + '-' + location.j
     return cellClass
+}
+
+function onOpenModal() {
+    var elModal = document.querySelector('.modal');
+    elModal.style.display = 'block';
+
+}
+function onCloseModal() {
+    var elModal = document.querySelector('.modal');
+    elModal.style.display = 'none';
 }

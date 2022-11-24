@@ -10,8 +10,8 @@ var gBoard
 var gGame
 var gGameTimer
 var gBombCoords
-
-
+var gHighScore = Infinity
+var gHints = 3
 
 const MINE = '<img src="img/mine2.png">'
 const FLAG = '<img src="img/flag.png">'
@@ -31,10 +31,17 @@ function initGame() {
     if (gLevel.mines === 2) gHealth = 2
     else gHealth = 3
 
+
 	gGame = { isOn: false }
 	gBoard = buildBoard(gLevel.size)
     
-    
+    if (!localStorage.highScore) {
+        localStorage.highScore = Infinity
+    }
+
+    var elHighScore = document.querySelector('.high-score')
+    elHighScore.innerText = localStorage.highScore
+
 	renderBoard(gBoard, '.minesweeper-container')
 }
 
@@ -51,6 +58,7 @@ function startGame() {
     loopBoard(gBoard)
     updateBombCount ()
     createHearts()
+    // createHints()
 }
 
 
@@ -83,9 +91,12 @@ function updateBombCount () {
 
 
 function startTimer() {
+    
+    var elTimer = document.querySelector('.score')
     gGameTimer = setInterval(function() {
     var elSeconds = document.querySelector('.timer')
     gSeconds ++
+    elTimer.innerText = gSeconds
     elSeconds.innerText ='0' + '0' + gSeconds 
     if (gSeconds > 9) elSeconds.innerText ='0' + gSeconds
     if (gSeconds > 99) elSeconds.innerText = gSeconds 
@@ -119,6 +130,7 @@ function winGame() {
         var elEmoji = document.querySelector('.startGame')
         elEmoji.src = 'img/win.png'
         clearInterval(gGameTimer)
+        highScore()
     }
 }
 
@@ -176,7 +188,7 @@ function cellClicked(elCell, i, j) {
 		elCell.classList.remove('hidden')
 
         colorNums(elCell, gBoard[i][j].minesAroundCount)
-        hints(elCell, i, j)
+        // hints(elCell, i, j)
         expandShown(gBoard, i, j, elCell)
 		renderCell(cellCoord, countBombs)
 		if (gBoard[i][j].isMine) {
@@ -231,12 +243,42 @@ function colorNums(elCell, minesAround) {
     }
 }
 
+function clickCounter() {
+	if (typeof Storage !== 'undefined') {
+		if (gSeconds < gHighScore) {
+			localStorage.highScore = Number(localStorage.highScore) + 1;
+		} else {
+			localStorage.highScore = 1;
+		}
+		document.getElementById('result').innerHTML =
+			'You have clicked the button ' + localStorage.highScore + ' time(s).';
+	} else {
+		document.getElementById('result').innerHTML = 'Sorry, your browser does not support web storage...';
+	}
+}
+
+
 function highScore() {
-    
+    var elHighScore = document.querySelector('.high-score')
+    if (gSeconds < gHighScore && gSeconds < localStorage.highScore) {
+        // console.log(`gSeconds: ${gSeconds}`);
+        localStorage.highScore = gSeconds
+        gHighScore = gSeconds
+    } else {
+        localStorage.highScore = 0
+    }
+
+    elHighScore.innerText = localStorage.highScore
 }
 
 
 function hints() {
+    var elHints = document.querySelectorAll('.hints')
+
+    for (var i = 0; i < elHints.length; i++) {
+        elHints[i].style.cursor = 'pointer'
+    }
+
 
 }
 

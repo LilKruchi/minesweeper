@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 
 <head>
 
@@ -7,13 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minesweeper</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/light.css">
     <link rel="icon" type="image/x-icon" href="./img/icon.png">
 
 </head>
 
 
 <body onload="initGame()" oncontextmenu="return false;">
+    <div class="modal">
+        <button onclick="onCloseModal()">x</button>
+        <h2>Your lowest time was: <span class="score">0</span></h2> <br/>
+        <h2>Lowest time was: <span class="high-score">0</span></h2>
+    </div> 
+    <button onclick="onOpenModal()">Open score tab</button>
+    <button onclick="toggleDarkMode(document.querySelector('.darkModeBtn'))"><img class="darkModeBtn" src="./img/moon.png"></button>
     <div class="container"><br/>
         <div class="box">
             
@@ -23,14 +30,12 @@
         <div class="box">
             <h1>MINESWEEPER</h1> <br/>
         </div>
-        <div class="box">
-            <button class="theme-switch"></button>
 
-        </div>
         <div class="box">
             <h2><span class="bomb-count">000</span></h2>
             <h2><span class="timer">000</span></h2>
             <div class="hearts"></div>
+            <div class="hints"></div>
 
             <div class="buttons">
                 <button onclick="difficultyLevel(4)">Beginner</button>
@@ -55,6 +60,7 @@
     <script src="./js/game.js"></script>
     <script src="./js/darkMode.js"></script>
 
+    
 </body>
 
 </html>

@@ -1,0 +1,234 @@
+/* Fonts */
+
+@font-face {
+	font-family: minesweeper;
+	src: url(../font/DSEG7Modern-Bold.ttf);
+}
+
+@font-face {
+	font-family: vcr;
+	src: url(../font/VCR_OSD_MONO_1.001.ttf);
+}
+/* ///////////////////////////////////////////////////////////////////////// */
+
+html {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+	-webkit-user-drag: none;
+	-khtml-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+}
+
+body {
+	background-color: rgb(35, 37, 49);
+}
+
+
+h1{
+	margin: 15px 0 0 0 ;
+	padding: none;
+}
+
+h2 {
+    margin: 40px 4px;
+    display: inline-block;
+	font-size: 1.3em;
+	/* margin-left: 2px; */
+}
+
+
+.minesweeper-container {
+	
+	font-family: minesweeper;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	
+}
+
+
+
+.container {
+	font-family: vcr;
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: rgb(199, 199, 199);
+	
+	text-align: center;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+
+	box-shadow: 0px 0px 0px 4px rgb(134, 134, 134);
+	padding: 10px;
+	border: solid 4px;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+
+
+}
+
+
+
+.credit {
+	font-family: vcr;
+
+	color: rgb(117, 117, 117);
+}
+
+
+button {
+	font-family: vcr;
+	padding: 5px;
+	background-color: rgb(218, 218, 218);
+	box-shadow: 0px 0px 0px 2px rgb(66, 66, 66);
+	border: solid 4px;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+	cursor: pointer;
+	margin: 8px 5px;
+	font-size: 1em;
+}
+
+button:hover {
+	background-color: rgb(182, 182, 182);
+}
+button:active {
+	background-color: rgb(136, 136, 136);
+	transform: translateY(2px);
+}
+
+.custom-input {
+	text-align: center;
+	font-family: vcr;
+	border: solid 4px;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+	background-color: rgb(245, 245, 245);
+	-webkit-appearance: none;
+}
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+} 
+
+
+
+
+.box, .modal {
+	font-family: vcr;
+	border: solid 4px;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+	margin: 10px;
+}
+
+.cell {
+	text-align: center;
+	width: 48px;
+	height: 48px;
+	background-color: rgb(180, 180, 180);
+	box-shadow: 0px 0px 0px 2px rgb(66, 66, 66);
+	border: solid 4px rgb(192, 192, 192);
+}
+
+.hearts {
+	margin: 0 0 10px;
+}
+
+
+.buttons {
+	margin: 10px 20px 15px;
+}
+
+.hover:hover {
+	background-color: rgba(77, 77, 77, 0.534);
+	border: solid 4px rgba(77, 77, 77, 0.014);
+}
+
+
+.hidden {
+	text-align: center;
+	width: 48px;
+	height: 48px;
+	background-color: rgb(230, 230, 230);
+	box-shadow: 0px 0px 0px 2px rgb(66, 66, 66);
+	border: solid 4px;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+	cursor: pointer;
+
+}
+
+
+.bomb {
+	background-color: rgb(255, 0, 0);
+	border-color: red;
+}
+
+
+.bomb-count, .timer {
+	background-color: rgb(32, 16, 16);
+    font-family: minesweeper;
+    color: red;
+    border: solid 4px;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+    padding: 10px 10px;
+}
+
+.modal {
+	box-shadow: 0px 0px 0px 2px rgb(66, 66, 66);
+	padding: 10px;
+    display:none;
+	left: 450px;
+	text-align: center;
+	position: fixed;
+	z-index: 10;
+	background-color: rgb(230, 230, 230);
+}
+
+
+.num1 {
+	color: blue;
+}
+
+.num2 {
+	color: green;
+}
+
+.num3 {
+	color: red;
+}
+
+.num4 {
+	color: purple;
+}
+
+.num5 {
+	color: maroon;
+}
+
+.num6 {
+	color: turquoise;
+}
+
+.num7 {
+	color: black;
+}
+
+.num8 {
+	color: gray;
+}
+
+.theme-switch {
+	height: 40px;
+	width: 40px;
+}
+
+
+

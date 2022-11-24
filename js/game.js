@@ -13,7 +13,7 @@ var gBombCoords
 
 
 
-const MINE = '<img src="img/mine.png">'
+const MINE = '<img src="img/mine2.png">'
 const FLAG = '<img src="img/flag.png">'
 const ALIVE = '<img src="img/alive.png">'
 const LOSE = '<img src="img/lose.png">'
@@ -134,7 +134,8 @@ function buildBoard(size) {
 				isShown: false,
 				isMine: false,
 				isMarked: false,
-				minesAroundCount: 0
+				minesAroundCount: 0,
+                isRecursive: false
 			}
 		}
 	}
@@ -173,10 +174,11 @@ function cellClicked(elCell, i, j) {
 
 		gBoard[i][j].minesAroundCount = countBombs
 		elCell.classList.remove('hidden')
-        
-        expandShown(gBoard, elCell, i, j)
-		renderCell(cellCoord, countBombs)
 
+        colorNums(elCell, gBoard[i][j].minesAroundCount)
+        hints(elCell, i, j)
+        expandShown(gBoard, i, j, elCell)
+		renderCell(cellCoord, countBombs)
 		if (gBoard[i][j].isMine) {
             clickOnBomb(cellCoord, elCell)
             elCell.removeAttribute('onmousedown');
@@ -191,13 +193,63 @@ function cellClicked(elCell, i, j) {
 }
 
 
-function expandShown(mat, elCell, cellI, cellJ) {
+function colorNums(elCell, minesAround) {
+    switch(minesAround) {
+        case 1:
+            elCell.classList.add('num1')
+            break
+
+        case 2:
+        elCell.classList.add('num2')
+        break
+
+        case 3:
+            elCell.classList.add('num3')
+        break
+
+        case 4:
+            elCell.classList.add('num4')
+        break
+
+        case 5:
+            elCell.classList.add('num5')
+        break
+
+        case 6:
+            elCell.classList.add('num6')
+        break
+
+        case 7:
+            elCell.classList.add('num7')
+        break
+
+        case 8:
+            elCell.classList.add('num8')
+        break
+
+        default:
+    }
+}
+
+function highScore() {
+    
+}
+
+
+function hints() {
+
+}
+
+
+
+
+function expandShown(mat, cellI, cellJ, elCell) {
+    mat[cellI][cellJ].isRecursive = true
     for (var i = cellI - 1; i <= cellI + 1; i++) {
         if (i < 0 || i >= mat.length) continue
-
+        
         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
-	        var cellCoord = { i, j }
-
+            var cellCoord = { i, j }
             var className = getClassName(cellCoord)
             var elCell = document.querySelector('.' + className)
             var currCell = mat[i][j]
@@ -205,15 +257,26 @@ function expandShown(mat, elCell, cellI, cellJ) {
             if (i === cellI && j === cellJ) continue
             if (j < 0 || j >= mat[i].length) continue
 
+            if (currCell.isMarked) continue
+            if (currCell.isShown) continue
+            if (currCell.isMine) continue
+            
             if(currCell.minesAroundCount === 0 || currCell.minesAroundCount === null) {
+                if (!currCell.isRecursive) {
+                    expandShown(mat,i, j, elCell)
+                    if (currCell.minesAroundCount === 0) return null
+                    renderCell({i:i, j:j}, currCell.minesAroundCount)
+                }
                 if (!currCell.isMine) {
                     elCell.classList.remove('hidden')
-                    renderCell({i:cellI, j:cellJ}, elCell.innerText)
 
                 }
+                
             }
+            renderCell({i:i, j:j}, elCell.innerText)
         }
     }
+
 }
 
 
@@ -230,7 +293,6 @@ function clickOnBomb(coords, elCell) {
     gScore -= 1
     updateHearts()
     updateBombCount()
-
 
     var elBtn = document.querySelector('.startGame')
 	elBtn.src = 'img/startGame.png'
@@ -254,11 +316,13 @@ function plantOrRemFlag(coords) {
         gBoard[coords.i][coords.j].isMarked = false
         gCountFlags += 1
     } else {
+
         if (gCountFlags > 0) {
             winGame(coords)
             renderCell(coords, FLAG)
             gBoard[coords.i][coords.j].isMarked = true
             gCountFlags -= 1
+
             if (gBoard[coords.i][coords.j].isMine) {
                 gScore -= 1;
                 updateBombCount()

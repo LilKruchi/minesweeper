@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
 
@@ -16,23 +16,31 @@
 <body onload="initGame()" oncontextmenu="return false;">
     <div class="container"><br/>
         <div class="box">
-    
+            
             <div class="credit"><h4>Made by: Liron Kruchinin</h4></div>
         </div>
         
         <div class="box">
             <h1>MINESWEEPER</h1> <br/>
         </div>
-
         <div class="box">
-            <h2>Bombs: <span class="bomb-count">000</span></h2>
-            <h2>Time: <span class="timer">000</span></h2>
+            <button class="theme-switch"></button>
+
+        </div>
+        <div class="box">
+            <h2><span class="bomb-count">000</span></h2>
+            <h2><span class="timer">000</span></h2>
             <div class="hearts"></div>
-        
-            <button onclick="difficultyLevel(4)">Beginner</button>
-            <button onclick="difficultyLevel(8)">Medium</button>
-            <button onclick="difficultyLevel(12)">Expert</button> <br/>
-            <button  onclick="startGame()"><img class='startGame' src="./img/alive.png"></button>
+
+            <div class="buttons">
+                <button onclick="difficultyLevel(4)">Beginner</button>
+                <button onclick="difficultyLevel(8)">Medium</button>
+                <button onclick="difficultyLevel(12)">Expert</button> <br/>
+                <button onclick="difficultyLevel(document.querySelector('.custom-input').value)">Custom size</button> <!-- How can i import input from text field -->
+                <input type="number" name="Custom heigh" class="custom-input" min="4"  placeholder="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                <br/>
+                <button  onclick="startGame()"><img class='startGame' src="./img/alive.png"></button>
+            </div>
         </div>
 
         
@@ -45,6 +53,7 @@
 
     <script src="./js/util.js"></script>
     <script src="./js/game.js"></script>
+    <script src="./js/darkMode.js"></script>
 
 </body>
 

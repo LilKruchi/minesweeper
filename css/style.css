@@ -90,6 +90,7 @@ button {
 	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
 	cursor: pointer;
 	margin: 8px 5px;
+	font-size: 1em;
 }
 
 button:hover {
@@ -99,6 +100,24 @@ button:active {
 	background-color: rgb(136, 136, 136);
 	transform: translateY(2px);
 }
+
+.custom-input {
+	text-align: center;
+	font-family: vcr;
+	border: solid 4px;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+	background-color: rgb(245, 245, 245);
+	-webkit-appearance: none;
+}
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+} 
 
 
 .box {
@@ -116,6 +135,14 @@ button:active {
 	border: solid 4px rgb(192, 192, 192);
 }
 
+.hearts {
+	margin: 0 0 10px;
+}
+
+
+.buttons {
+	margin: 10px 20px 15px;
+}
 
 .hover:hover {
 	background-color: rgba(77, 77, 77, 0.534);
@@ -152,3 +179,41 @@ button:active {
 }
 
 
+.num1 {
+	color: blue;
+}
+
+.num2 {
+	color: green;
+}
+
+.num3 {
+	color: red;
+}
+
+.num4 {
+	color: purple;
+}
+
+.num5 {
+	color: maroon;
+}
+
+.num6 {
+	color: turquoise;
+}
+
+.num7 {
+	color: black;
+}
+
+.num8 {
+	color: gray;
+}
+
+
+
+
+[data-theme="dark"] {
+	background-color: black;
+}

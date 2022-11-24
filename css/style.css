@@ -1,9 +1,14 @@
+/* Fonts */
+
 @font-face {
 	font-family: minesweeper;
 	src: url(../font/DSEG7Modern-Bold.ttf);
 }
 
-
+@font-face {
+	font-family: vcr;
+	src: url(../font/VCR_OSD_MONO_1.001.ttf);
+}
 /* ///////////////////////////////////////////////////////////////////////// */
 
 html {
@@ -20,28 +25,86 @@ html {
 }
 
 body {
-	background-color: rgb(231, 231, 231);
+	background-color: rgb(255, 255, 255);
 }
 
 
+h1{
+	margin: 15px 0 0 0 ;
+	padding: none;
+}
+
 h2 {
-    margin: 40px 10px;
+    margin: 40px 4px;
     display: inline-block;
+	font-size: 1.3em;
+	/* margin-left: 2px; */
 }
 
 
 .minesweeper-container {
+	
 	font-family: minesweeper;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	
+}
+
+
+
+.container {
+	font-family: vcr;
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: rgb(199, 199, 199);
+	
+	text-align: center;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+
+	box-shadow: 0px 0px 0px 2px rgb(66, 66, 66);
+	padding: 10px;
+	border: solid 4px rgb(192, 192, 192);
+
+}
+
+.credit {
+	font-family: vcr;
+	position: absolute;
+	top: 15px;
+	left: 21px;
+	color: rgb(117, 117, 117);
+}
+
+
+button {
+	font-family: vcr;
+	padding: 5px;
+	background-color: rgb(218, 218, 218);
+	box-shadow: 0px 0px 0px 2px rgb(66, 66, 66);
+	border: solid 4px;
+	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
+	cursor: pointer;
+	margin: 8px 5px;
+}
+
+button:hover {
+	background-color: rgb(182, 182, 182);
+}
+button:onclick {
+	background-color: rgb(136, 136, 136);
 }
 
 
 .cell {
 	text-align: center;
-	width: 55px;
-	height: 55px;
+	width: 48px;
+	height: 48px;
 	background-color: rgb(180, 180, 180);
 	box-shadow: 0px 0px 0px 2px rgb(66, 66, 66);
-	padding: 2px;
+	/* padding: 2px; */
 	border: solid 4px rgb(192, 192, 192);
 }
 
@@ -54,11 +117,11 @@ h2 {
 
 .hidden {
 	text-align: center;
-	width: 55px;
-	height: 55px;
+	width: 48px;
+	height: 48px;
 	background-color: rgb(230, 230, 230);
 	box-shadow: 0px 0px 0px 2px rgb(66, 66, 66);
-	padding: 2px;
+	/* padding: 2px; */
 	border: solid 4px;
 	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
 	cursor: pointer;
@@ -72,10 +135,13 @@ h2 {
 }
 
 
-.score, .timer {
+.bomb-count, .timer {
+	background-color: rgb(32, 16, 16);
     font-family: minesweeper;
     color: red;
     border: solid 4px;
 	border-color: rgb(255, 255, 255) rgb(98, 98, 98) rgb(98, 98, 98) rgb(255, 255, 255);
     padding: 10px 10px;
 }
+
+

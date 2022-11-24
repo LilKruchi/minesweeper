@@ -30,6 +30,19 @@ function renderBoard(mat, selector) {
 }
 
 
+function createHearts() {
+    var strHTML = ''
+
+    for (var i = 0 ; i < gHealth; i++) {
+        strHTML += '<img src="./img/hp.png">'
+    }
+
+    const elDiv = document.querySelector('.hearts')
+    elDiv.innerHTML = strHTML
+    
+}
+
+
 function setMinesNegsCount(cellI, cellJ, mat) {
     var neighborsCount = 0
 
@@ -40,7 +53,7 @@ function setMinesNegsCount(cellI, cellJ, mat) {
             
             if (i === cellI && j === cellJ) continue
             if (j < 0 || j >= mat[i].length) continue
-            console.log(mat[i][j].isMine);
+            // console.log(mat[i][j].isMine);
             if (mat[i][j].isMine) {
                 mat[cellI][cellJ].minesAroundCount++;
                 neighborsCount++
@@ -53,52 +66,6 @@ function setMinesNegsCount(cellI, cellJ, mat) {
     return neighborsCount
 }
 
-
-// function setMinesNegsCount(cellI, cellJ, mat) {
-//     //
-//     for (var i = cellI - 1; i <= cellI + 1; i++) {
-//       if (i < 0 || i >= mat.length) continue;
-  
-//       for (var j = cellJ - 1; j <= cellJ + 1; j++) {
-//         if (i === cellI && j === cellJ) continue;
-//         if (j < 0 || j >= mat[i].length) continue;
-  
-//         if (mat[i][j].isMine) mat[cellI][cellJ].minesAroundCount++;
-//       }
-//     }
-//     return mat[cellI][cellJ].minesAroundCount;
-//   }
-
-
-// function setMinesNegsCount(cellI, cellJ, mat) {
-//     var neighborsCount = 0
-//     console.log(mat);
-
-//     for (var i = 0 - 1; i <= i + 1; i++) {
-//         console.log(i);
-//         if (i < 0 || i >= mat.length) continue
-//         for (var j = 0 - 1; j <= j + 1; j++) {
-//             if (i === i && j === j) continue
-//             if (j < 0 || j >= mat[i].length) continue
-//         }
-        
-//     }
-
-//     for (var i = cellI - 1; i <= cellI + 1; i++) {
-//         if (i < 0 || i >= mat.length) continue
-
-//         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
-//             console.log(i, j);
-//             if (i === cellI && j === cellJ) continue
-//             if (j < 0 || j >= mat[i].length) continue
-
-//         }
-//     }
-
-//     // console.log(`number of mines: ${neighborsCount}`);
-//     if (neighborsCount === 0) return null
-//     return neighborsCount
-// }
 
 
 function getEmptyPositions(board) {

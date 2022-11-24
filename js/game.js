@@ -4,12 +4,14 @@
 var gLevel = {size: 4, mines: 2}
 var gSeconds = 0
 var gHealth = 1
-var gCountFlags = gLevel.mines - 1
-var gIsFlagged = false
+var gCountFlags = gLevel.mines
+var gScore = gLevel.mines
 var gBoard
 var gGame
 var gGameTimer
 var gBombCoords
+
+
 
 const MINE = '<img src="img/mine.png">'
 const FLAG = '<img src="img/flag.png">'
@@ -21,38 +23,63 @@ const START_GAME = '<img src="img/startGame.png">'
 // Rest of functions
 
 function initGame() {
+    var elBtn = document.querySelector('.startGame')
+	elBtn.src = 'img/alive.png'
+    clearInterval(gGameTimer)
     gCountFlags = gLevel.mines
-	gHealth = 3
+
+    if (gLevel.mines === 2) gHealth = 2
+    else gHealth = 3
+
 	gGame = { isOn: false }
 	gBoard = buildBoard(gLevel.size)
     
-
-	renderBoard(gBoard, '.minesweeper-container')
-
-    gHealth = -1
     
-
-	
+	renderBoard(gBoard, '.minesweeper-container')
 }
-
 
 
 function startGame() {
     
-    var elBtn = document.querySelector('.startGame')
-	elBtn.src = 'img/alive.png'
-    clearInterval(gGameTimer)
-	initGame()
+    initGame()
+    gSeconds = 0
     startTimer()
 	gGame.isOn = true
-    
+    gScore = gLevel.mines
 	gBoard = buildBoard(gLevel.size)
 	gBombCoords = randomMineLocation(gBoard)
     loopBoard(gBoard)
-
-
-    // console.log(gBoard);
+    updateBombCount ()
+    createHearts()
 }
+
+
+function difficultyLevel(size) { 
+    console.log(size);
+    gLevel.size = size
+    gLevel.mines  = 2
+
+    if (size > 6) {
+        gLevel.mines = Math.floor((size * size) / 4.5)
+    }
+    startGame()
+}
+
+
+function updateBombCount () {
+    var elBombs = document.querySelector('.bomb-count')
+    elBombs.innerText = '0' + '0' + gScore
+
+    if (gScore > 9) {
+        elBombs.innerText = '0' + gScore
+    }
+
+    if (gScore > 99) {
+        elBombs.innerText = gScore
+    }
+
+}
+
 
 function startTimer() {
     gGameTimer = setInterval(function() {
@@ -65,26 +92,33 @@ function startTimer() {
 }
 
 function loopBoard(board) {
-    console.log(board.length);
+
     for (var i = 0; i < board.length; i++) {
+
         for (var j = 0; j < board[i].length; j++) {
-            // console.log(i, j);
             setMinesNegsCount(i, j, board)
         }
     }
 }
 
 function loseGame() {
+
     if (gHealth === 0) {
         gGame.isOn = false
         var elEmoji = document.querySelector('.startGame')
         elEmoji.src = 'img/lose.png'
+        clearInterval(gGameTimer)
     }
 }
 
 
 function winGame() {
-
+    if (gScore === 1) {
+        gGame.isOn = false
+        var elEmoji = document.querySelector('.startGame')
+        elEmoji.src = 'img/win.png'
+        clearInterval(gGameTimer)
+    }
 }
 
 
@@ -124,6 +158,8 @@ function revealBombsOnLose(bombCoords) {
 
 
 function cellClicked(elCell, i, j) {
+    var elBombs = document.querySelector('.bomb-count')
+    console.log(elBombs.innerText);
 
 	if (!gGame.isOn) return
 	var cellCoord = { i, j }
@@ -132,23 +168,24 @@ function cellClicked(elCell, i, j) {
 	if (elCell.button === 0) {
 
 		var countBombs = setMinesNegsCount(i, j, gBoard)
-		gBoard[i][j].minesAroundCount = countBombs
-        // countBombs = numberCategorize(countBombs)
 		var className = getClassName(cellCoord)
 		var elCell = document.querySelector('.' + className)
+
+		gBoard[i][j].minesAroundCount = countBombs
 		elCell.classList.remove('hidden')
+        
         expandShown(gBoard, elCell, i, j)
 		renderCell(cellCoord, countBombs)
 
 		if (gBoard[i][j].isMine) {
-            clickOnBomb(i, j, elCell)
+            clickOnBomb(cellCoord, elCell)
             elCell.removeAttribute('onmousedown');
 
 		}
 	}
 
 	if (elCell.button === 2) {
-        plantOrRemFlag(i, j, cellCoord)
+        plantOrRemFlag(cellCoord)
 	}
 
 }
@@ -164,10 +201,10 @@ function expandShown(mat, elCell, cellI, cellJ) {
             var className = getClassName(cellCoord)
             var elCell = document.querySelector('.' + className)
             var currCell = mat[i][j]
+
             if (i === cellI && j === cellJ) continue
             if (j < 0 || j >= mat[i].length) continue
 
-            
             if(currCell.minesAroundCount === 0 || currCell.minesAroundCount === null) {
                 if (!currCell.isMine) {
                     elCell.classList.remove('hidden')
@@ -181,11 +218,13 @@ function expandShown(mat, elCell, cellI, cellJ) {
 
 
 
-function clickOnBomb(i, j, elCell) {
-	var cellCoord = { i, j }
+function clickOnBomb(coords, elCell) {
 
     elCell.classList.add('bomb')
     gHealth -= 1
+    gScore -= 1
+    updateBombCount()
+
     console.log('hearts left:',gHealth)
 
     var elBtn = document.querySelector('.startGame')
@@ -195,27 +234,33 @@ function clickOnBomb(i, j, elCell) {
         loseGame()
         revealBombsOnLose(gBombCoords)
     }
-    gBoard[i][j].isShown = true
-    renderCell(cellCoord, MINE)
+    gBoard[coords.i][coords.j].isShown = true
+    renderCell(coords, MINE)
 }
 
 
-function plantOrRemFlag(i,j,coords) {
+function plantOrRemFlag(coords) {
 
-    renderCell(coords, FLAG)
+    var isCoordMarked = gBoard[coords.i][coords.j].isMarked
 
-    // console.log(coords)
-    if (!gIsFlagged) {
-        renderCell(coords, FLAG)
-        gCountFlags -= 1
-        gIsFlagged = true
-
-    } else {
-        gCountFlags += 1
+    
+    if (isCoordMarked) {
         renderCell(coords, '')
-        gIsFlagged = false
+        gBoard[coords.i][coords.j].isMarked = false
+        gCountFlags += 1
+    } else {
+        if (gCountFlags > 0) {
+            winGame(coords)
+            renderCell(coords, FLAG)
+            gBoard[coords.i][coords.j].isMarked = true
+            gCountFlags -= 1
+            if (gBoard[coords.i][coords.j].isMine) {
+                gScore -= 1;
+                updateBombCount()
+            }
+        }
     }
-    // console.log(gIsFlagged)
+
 
 }
 
@@ -237,25 +282,8 @@ function randomMineLocation(board) {
 
 		renderCell(coord, '')
 
-
 		gBoard[coord.i][coord.j].isMine = true
 	}
-	// if (gGame.size === 4){}
 
 	return bombCoords
-}
-
-
-function removeBombSelection(bombCoords, board) {
-	// console.log(bombCoords)
-
-	for (var i = 0; i < bombCoords.length; i++) {
-		var cellI = bombCoords[i].i
-		var cellJ = bombCoords[i].j
-        var cellCoord = {i:cellI, j:cellJ}
-        console.log(board[cellI][cellJ]);
-        board[cellI][cellJ].isMine = false
-		// board[cellI][cellJ].isMine = false
-	}
-    // renderCell(cellCoord, MINE)
 }

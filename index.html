@@ -14,12 +14,22 @@
 
 
 <body onload="initGame()" oncontextmenu="return false;">
+
+    <img class="desktop-icons" src="./img/desktopIcon.png" onclick="openGame()">
+    <span class="desktop-text minesweep">MineSweeper</span>
     <div class="modal">
         <button onclick="onCloseModal()">x</button>
         <h2>Your lowest time was: <span class="score">0</span></h2> <br/>
         <h2>Lowest time was: <span class="high-score">0</span></h2>
     </div> 
-        <div class="container"><br/>
+
+    <div class="container"><br/>
+        <div class="window"><span class="title" >MineSweeper</span></div>
+        <img class="icon-game" src="./img/mine.png">
+        <span class="hotbar-tools x" onclick="closeGame()">x</span>
+        <span class="hotbar-tools sqr">□</span>
+        <span class="hotbar-tools undr">_</span>
+            
         <div class="box">
             <div class="credit"><h4>Made by: Liron Kruchinin</h4></div>
         </div>
@@ -48,13 +58,13 @@
             </div>
         </div>
 
-        
         <div class="minesweeper-container" draggable="false">
     
         </div>
     </div>
 
 
+    <div class="taskbar"><span class="start-btn"><img class="start-img" src="./img/startIcon.png">Start</div>
 
     <script src="./js/util.js"></script>
     <script src="./js/game.js"></script>

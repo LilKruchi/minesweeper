@@ -129,6 +129,20 @@ function onCloseModal() {
 }
 
 
+function closeGame() {
+    var elHotBar = document.querySelector('.container')
+
+    elHotBar.style.display = 'none'
+}
+
+
+function openGame() {
+    var elHotBar = document.querySelector('.container')
+
+    elHotBar.style.display = 'block'
+}
+
+
 function toggleDarkMode(elBtn) {
     console.log(elBtn);
 
